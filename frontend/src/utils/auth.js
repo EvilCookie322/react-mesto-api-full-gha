@@ -1,4 +1,4 @@
-const BASE_URl = "http://localhost:4000";
+const BASE_URl = "http://api.cookie.nomoredomains.xyz";
 
 const checkResponse = (response) => {
 	return response.ok ? response.json() : Promise.reject(response.json());
@@ -29,7 +29,7 @@ const checkToken = () => {
 	return fetch(`${BASE_URl}/users/me`, {
 		method: "GET",
 		headers: {
-			"Accept": "application/json",
+			// "Accept": "application/json",
 			"Content-Type": "application/json",
 		},
 		credentials: 'include',
