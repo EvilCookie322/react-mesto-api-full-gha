@@ -1,4 +1,4 @@
-const BASE_URl = "https://auth.nomoreparties.co";
+const BASE_URl = "http://localhost:4000";
 
 const checkResponse = (response) => {
 	return response.ok ? response.json() : Promise.reject(response.json());
@@ -10,6 +10,7 @@ const registration = ({ email, password }) => {
 		headers: {
 			"Content-Type": "application/json",
 		},
+		credentials: 'include',
 		body: JSON.stringify({ email, password }),
 	}).then((response) => checkResponse(response));
 };
@@ -20,22 +21,24 @@ const authorization = ({ email, password }) => {
 		headers: {
 			"Content-Type": "application/json",
 		},
+		credentials: 'include',
 		body: JSON.stringify({ email, password }),
 	}).then((response) => checkResponse(response));
 };
-const checkToken = (token) => {
+const checkToken = () => {
 	return fetch(`${BASE_URl}/users/me`, {
 		method: "GET",
 		headers: {
+			"Accept": "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${token}`,
 		},
+		credentials: 'include',
 	}).then((response) => {
 		return response.ok
 			? response.json()
 			: Promise.reject(
-					new Error("Ошибка проверки токена. Код ошибки:", response.status)
-			  );
+					new Error(`Ошибка проверки токена. Код ошибки: ${response.status}`, )
+			);
 	});
 };
 

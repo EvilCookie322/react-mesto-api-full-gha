@@ -43,6 +43,7 @@ function App() {
 			Api.getUserInformation()
 				.then((userInformation) => {
 					if (userInformation) setCurrentUser(userInformation);
+					
 					else return Promise.reject(new Error("Sorry, we have problems"));
 				})
 				.catch((error) => console.error(error));
@@ -146,22 +147,23 @@ function App() {
 	}
 
 	function handleTokenCheck() {
-		const jwt = localStorage.getItem("jwt");
-		if (jwt) {
-			checkToken(jwt)
-				.then((res) => {
-					setUserEmail(res.data.email);
-					setLoggedIn(true);
-					history.push("/");
-				})
-				.catch((error) => console.log(error));
-		}
+		checkToken()
+			.then((res) => {
+				setUserEmail(res.email);
+				setLoggedIn(true);
+				history.push("/");
+			})
+			.catch((error) => console.log(error));
 	}
 
 	function handleSignOut() {
-		localStorage.removeItem("jwt");
-		setLoggedIn(false);
-		setUserEmail("");
+		return Api.signOut()
+			.then(() => {
+				setLoggedIn(false);
+				setUserEmail("");
+				history.push("/sign-in");
+			})
+			.catch((error) => console.log(error));
 	}
 
 	function handleRegistrationSubmit(formValues, setFormValues) {
@@ -195,7 +197,7 @@ function App() {
 			.then((result) => {
 				if (result.token) {
 					setFormValues({ email: "", password: "" });
-					localStorage.setItem("jwt", result.token);
+					// localStorage.setItem("jwt", result.token);
 					setLoggedIn(true);
 					history.push("/");
 				}
@@ -276,7 +278,6 @@ function App() {
 				onAddPlace={handleAddPlace}
 				onClose={closeAllPopups}
 			/>
-			{/* TODO: написать функциональность подтверждения удаления */}
 			<PopupWithForm
 				title='Вы уверены?'
 				name='confirm-delete'

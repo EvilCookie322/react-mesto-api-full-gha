@@ -23,13 +23,13 @@ class Api {
 
 	getInitialCards() {
 		return this.response(() => {
-			return fetch(`${this.#url}/cards`, { headers: this.#headers });
+			return fetch(`${this.#url}/cards`, { credentials: 'include', headers: this.#headers });
 		});
 	}
 
 	getUserInformation() {
 		return this.response(() => {
-			return fetch(`${this.#url}/users/me`, { headers: this.#headers });
+			return fetch(`${this.#url}/users/me`, { credentials: 'include', headers: this.#headers });
 		});
 	}
 
@@ -37,6 +37,7 @@ class Api {
 		return this.response(() => {
 			return fetch(`${this.#url}/users/me`, {
 				method: "PATCH",
+				credentials: 'include',
 				headers: this.#headers,
 				body: JSON.stringify({
 					name: name,
@@ -50,6 +51,7 @@ class Api {
 		return this.response(() => {
 			return fetch(`${this.#url}/cards`, {
 				method: "POST",
+				credentials: 'include',
 				headers: this.#headers,
 				body: JSON.stringify({
 					name: name,
@@ -63,6 +65,7 @@ class Api {
 		return this.response(() => {
 			return fetch(`${this.#url}/cards/${id}`, {
 				method: "DELETE",
+				credentials: 'include',
 				headers: this.#headers,
 			});
 		});
@@ -72,6 +75,7 @@ class Api {
 		return this.response(() => {
 			return fetch(`${this.#url}/cards/${id}/likes`, {
 				method: "PUT",
+				credentials: 'include',
 				headers: this.#headers,
 			});
 		});
@@ -81,6 +85,7 @@ class Api {
 		return this.response(() => {
 			return fetch(`${this.#url}/cards/${id}/likes`, {
 				method: "DELETE",
+				credentials: 'include',
 				headers: this.#headers,
 			});
 		});
@@ -90,6 +95,7 @@ class Api {
 		return this.response(() => {
 			return fetch(`${this.#url}/users/me/avatar`, {
 				method: "PATCH",
+				credentials: 'include',
 				headers: this.#headers,
 				body: JSON.stringify({
 					avatar: link,
@@ -97,13 +103,18 @@ class Api {
 			});
 		});
 	}
+
+	signOut() {
+		return this.response(() => {
+			return fetch(`${this.#url}/signout`, { credentials: 'include', headers: this.#headers });
+		});
+	}
 }
 
 const API = new Api({
-	url: "https://mesto.nomoreparties.co/v1/cohort-52",
-
+	url: "http://localhost:4000",
+	credentials: 'include',
 	headers: {
-		authorization: "ed068a2f-c117-42a5-a232-1e0db66110be",
 		"Content-Type": "application/json",
 	},
 });
