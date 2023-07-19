@@ -1,4 +1,6 @@
 const BASE_URl = "http://api.cookie.nomoredomains.xyz";
+// "http://api.cookie.nomoredomains.xyz"
+// "http://localhost:4000"
 
 const checkResponse = (response) => {
 	return response.ok ? response.json() : Promise.reject(response.json());

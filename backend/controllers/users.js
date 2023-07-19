@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -7,7 +8,9 @@ const ValidationError = require('../custom_errors/ValidationError');
 const AuthorizationError = require('../custom_errors/AuthorizationError');
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = 'super-banana';
+const { NODE_ENV, JWT_SECRET } = process.env;
+
+// const JWT_SECRET = 'super-banana';
 
 const handleValidationError = (err) => {
   if (err.name === 'ValidationError') {
@@ -63,7 +66,7 @@ module.exports.login = (req, res, next) => {
       return bcrypt.compare(password, user.password)
         .then((isMatch) => {
           if (!isMatch) return next(new AuthorizationError('Не правильная почта или пароль'));
-          const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+          const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-banana', { expiresIn: '7d' });
           return res.cookie('jwt', token, {
             httpOnly: true,
             sameSite: true,

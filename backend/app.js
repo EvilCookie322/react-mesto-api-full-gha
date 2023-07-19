@@ -13,14 +13,21 @@ const { PORT = 4000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.en
 
 const app = express();
 
-// app.use(cors({ origin: 'http://api.cookie.nomoredomains.xyz', credentials: true }));
+app.use(cors({ origin: ['http://api.cookie.nomoredomains.xyz', 'http://localhost:3000'], credentials: true }));
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
 });
 
-mongoose.connect(DB_URL, { useNewUrlParser: true });
+mongoose.connect(DB_URL, { useNewUrlParser: true })
+  .then(() => {
+    console.log('Db connected');
+  })
+  .catch((error) => {
+    console.log('Db connection failed');
+    console.error(error);
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
