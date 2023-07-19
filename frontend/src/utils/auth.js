@@ -1,4 +1,4 @@
-const BASE_URl = "http://api.cookie.nomoredomains.xyz";
+const BASE_URl = "https://api.cookie.nomoredomains.xyz";
 
 const checkResponse = (response) => {
 	return response.ok ? response.json() : Promise.reject(response.json());

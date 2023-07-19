@@ -112,7 +112,7 @@ class Api {
 }
 
 const API = new Api({
-	url: "http://api.cookie.nomoredomains.xyz",
+	url: "https://api.cookie.nomoredomains.xyz",
 	credentials: 'include',
 	headers: {
 		Accept: "application/json",
