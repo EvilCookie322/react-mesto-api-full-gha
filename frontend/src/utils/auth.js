@@ -10,6 +10,7 @@ const registration = ({ email, password }) => {
 	return fetch(`${BASE_URl}/signup`, {
 		method: "POST",
 		headers: {
+			Accept: "application/json",
 			"Content-Type": "application/json",
 		},
 		credentials: 'include',
@@ -21,6 +22,7 @@ const authorization = ({ email, password }) => {
 	return fetch(`${BASE_URl}/signin`, {
 		method: "POST",
 		headers: {
+			Accept: "application/json",
 			"Content-Type": "application/json",
 		},
 		credentials: 'include',
@@ -31,7 +33,7 @@ const checkToken = () => {
 	return fetch(`${BASE_URl}/users/me`, {
 		method: "GET",
 		headers: {
-			"Accept": "application/json",
+			Accept: "application/json",
 			"Content-Type": "application/json",
 		},
 		credentials: 'include',

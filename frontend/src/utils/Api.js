@@ -117,6 +117,7 @@ const API = new Api({
 	// "http://localhost:4000"
 	credentials: 'include',
 	headers: {
+		Accept: "application/json",
 		"Content-Type": "application/json",
 	},
 });
