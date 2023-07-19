@@ -29,7 +29,7 @@ const checkToken = () => {
 	return fetch(`${BASE_URl}/users/me`, {
 		method: "GET",
 		headers: {
-			// "Accept": "application/json",
+			"Accept": "application/json",
 			"Content-Type": "application/json",
 		},
 		credentials: 'include',
